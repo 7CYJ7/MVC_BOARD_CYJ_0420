@@ -99,7 +99,7 @@ public class BoardController {
 		
 		model.addAttribute("request", request);
 		
-		BDeleteCommand command = new BDeleteCommand();
+		BContentCommand command = new BContentCommand();
 		command.execute(model);
 		
 		return "replyForm";
