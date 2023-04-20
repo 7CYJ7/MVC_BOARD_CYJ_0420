@@ -7,6 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.yongjin.board.command.BContentCommand;
+import com.yongjin.board.command.BDeleteCommand;
 import com.yongjin.board.command.BListCommand;
 import com.yongjin.board.command.BModifyCommand;
 import com.yongjin.board.command.BWriteCommand;
@@ -15,6 +16,11 @@ import com.yongjin.board.command.BWriteCommand;
 
 @Controller
 public class BoardController {
+	
+	@RequestMapping(value ="/")
+	public String index() {
+		return "redirect:list";
+	}
 	
 	@RequestMapping(value="/write_form")
 	public String write_form() {
@@ -45,7 +51,7 @@ public class BoardController {
 	@RequestMapping(value = "content_view")
 	public String content_view(HttpServletRequest request, Model model) {
 		
-		model.addAttribute("requset", request);
+		model.addAttribute("request", request);
 		
 		BContentCommand command = new BContentCommand();
 		command.execute(model);
@@ -53,10 +59,10 @@ public class BoardController {
 		return "contentView";
 	}
 	
-	@RequestMapping(value="/modify.form")
+	@RequestMapping(value="/modify_form")
 	public String modify_form(HttpServletRequest request, Model model) {
 		
-		model.addAttribute("requset", request);
+		model.addAttribute("request", request);
 		
 		BContentCommand command = new BContentCommand();
 		command.execute(model);
@@ -71,6 +77,17 @@ public class BoardController {
 		model.addAttribute("request", request);
 		
 		BModifyCommand command = new BModifyCommand();
+		command.execute(model);
+		
+		return "redirect:list";
+	}
+	
+	@RequestMapping(value = "/delete")
+	public String delete(HttpServletRequest request, Model model) {
+		
+		model.addAttribute("request", request);
+		
+		BDeleteCommand command = new BDeleteCommand();
 		command.execute(model);
 		
 		return "redirect:list";

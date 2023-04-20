@@ -181,12 +181,13 @@ public class BDao {
 		
 		try {
 			conn = dataSource.getConnection();
-			String sql = "INSERT INTO mvc_board (bid, bname, btitle, bcontent, bhit, bgroup, bstep, bindent) VALUES (mvc_board_seq.nextval, ?, ?, ?, 0, mvc_board_seq.currval, 0, 0)";
+			String sql = "UPDATE mvc_board SET bname=?, btitle=?, bcontent=? WHERE bid=?";
 			
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, bname);
 			pstmt.setString(2, btitle);
 			pstmt.setString(3, bcontent);
+			pstmt.setString(4, bid);
 			
 			pstmt.executeUpdate();
 			
@@ -207,5 +208,35 @@ public class BDao {
 		
 	}
 	
-	
+	public void delete(String bid) {
+		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		
+		try {
+			conn = dataSource.getConnection();
+			String sql = "DELETE FROM mvc_board WHERE bid=?";
+			
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, bid);
+			
+			pstmt.executeUpdate();
+			
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if(pstmt != null) {
+					pstmt.close();
+				}
+				if(conn != null) {
+					conn.close();
+				}	
+			} catch(Exception e) {
+				e.printStackTrace();
+			}
+		}
+		
+	}
+
 }
