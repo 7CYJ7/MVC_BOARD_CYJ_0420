@@ -119,6 +119,8 @@ public class BDao {
 	
 	public BDto content_view(String boardId) {
 		
+		upHit(boardId); // 조회수 증가 함수 호출
+		
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -238,5 +240,37 @@ public class BDao {
 		}
 		
 	}
+	
+	public void upHit(String bid) { // 호출될때마다 조회수(bhit)를 1씩 증가
+		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		
+		try {
+			conn = dataSource.getConnection();
+			String sql = "UPDATE mvc_board SET bhit=bhit+1 WHERE bid=?";
+			
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, bid);
+			
+			pstmt.executeUpdate();
+			
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if(pstmt != null) {
+					pstmt.close();
+				}
+				if(conn != null) {
+					conn.close();
+				}	
+			} catch(Exception e) {
+				e.printStackTrace();
+			}
+		}
+		
+	}
+
 
 }
