@@ -4,7 +4,7 @@ import java.sql.Timestamp;
 
 public class BDto {
 	
-	private String bid;
+	private int bid;
 	private String bname;
 	private String btitle;
 	private String bcontent;
@@ -19,7 +19,7 @@ public class BDto {
 		// TODO Auto-generated constructor stub
 	}
 
-	public BDto(String bid, String bname, String btitle, String bcontent, Timestamp bdate, int bhit, int bgroup,
+	public BDto(int bid, String bname, String btitle, String bcontent, Timestamp bdate, int bhit, int bgroup,
 			int bstep, int bindent) {
 		super();
 		this.bid = bid;
@@ -33,11 +33,11 @@ public class BDto {
 		this.bindent = bindent;
 	}
 
-	public String getBid() {
+	public int getBid() {
 		return bid;
 	}
 
-	public void setBid(String bid) {
+	public void setBid(int bid) {
 		this.bid = bid;
 	}
 
@@ -104,6 +104,8 @@ public class BDto {
 	public void setBindent(int bindent) {
 		this.bindent = bindent;
 	}
+
+	
 	
 	
 
