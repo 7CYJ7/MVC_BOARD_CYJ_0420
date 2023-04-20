@@ -10,6 +10,7 @@ import com.yongjin.board.command.BContentCommand;
 import com.yongjin.board.command.BDeleteCommand;
 import com.yongjin.board.command.BListCommand;
 import com.yongjin.board.command.BModifyCommand;
+import com.yongjin.board.command.BReplyCommand;
 import com.yongjin.board.command.BWriteCommand;
 
 
@@ -88,6 +89,28 @@ public class BoardController {
 		model.addAttribute("request", request);
 		
 		BDeleteCommand command = new BDeleteCommand();
+		command.execute(model);
+		
+		return "redirect:list";
+	}
+	
+	@RequestMapping(value="/reply_form")
+	public String reply_form(HttpServletRequest request, Model model) {
+		
+		model.addAttribute("request", request);
+		
+		BDeleteCommand command = new BDeleteCommand();
+		command.execute(model);
+		
+		return "replyForm";
+	}
+	
+	@RequestMapping(value="/reply")
+	public String reply(HttpServletRequest request, Model model) {
+		
+		model.addAttribute("request", request);
+		
+		BReplyCommand command = new BReplyCommand();
 		command.execute(model);
 		
 		return "redirect:list";

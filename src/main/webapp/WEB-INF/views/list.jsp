@@ -5,10 +5,10 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>게시판 글목록</title>
+<title>게시판 글 목록</title>
 </head>
 <body>
-	<h1>게시판 글리스트</h1>
+	<h1>게시판 글 리스트</h1>
 	<hr>
 	<table border="1" cellspacing="0" cellpadding="0" width="1000">
 		<tr>
