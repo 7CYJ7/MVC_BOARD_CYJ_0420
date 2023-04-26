@@ -13,23 +13,22 @@ import com.yongjin.board.command.BModifyCommand;
 import com.yongjin.board.command.BReplyCommand;
 import com.yongjin.board.command.BWriteCommand;
 
-
-
 @Controller
 public class BoardController {
 	
-	@RequestMapping(value ="/")
+	@RequestMapping(value = "/")
 	public String index() {
+		
 		return "redirect:list";
 	}
 	
-	@RequestMapping(value="/write_form")
+	@RequestMapping(value = "/write_form")
 	public String write_form() {
 		
 		return "writeForm";
 	}
 	
-	@RequestMapping(value="/write")
+	@RequestMapping(value = "/write")
 	public String write(HttpServletRequest request, Model model) {
 		
 		model.addAttribute("request", request);
@@ -60,14 +59,13 @@ public class BoardController {
 		return "contentView";
 	}
 	
-	@RequestMapping(value="/modify_form")
+	@RequestMapping(value = "/modify_form")
 	public String modify_form(HttpServletRequest request, Model model) {
 		
 		model.addAttribute("request", request);
 		
 		BContentCommand command = new BContentCommand();
 		command.execute(model);
-		
 		
 		return "modifyForm";
 	}
@@ -94,7 +92,7 @@ public class BoardController {
 		return "redirect:list";
 	}
 	
-	@RequestMapping(value="/reply_form")
+	@RequestMapping(value = "/reply_form")
 	public String reply_form(HttpServletRequest request, Model model) {
 		
 		model.addAttribute("request", request);
@@ -105,7 +103,7 @@ public class BoardController {
 		return "replyForm";
 	}
 	
-	@RequestMapping(value="/reply")
+	@RequestMapping(value = "/reply")
 	public String reply(HttpServletRequest request, Model model) {
 		
 		model.addAttribute("request", request);

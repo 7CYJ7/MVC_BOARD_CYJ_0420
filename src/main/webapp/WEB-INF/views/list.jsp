@@ -5,10 +5,10 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>게시판 글 목록</title>
+<title>게시판 글목록</title>
 </head>
 <body>
-	<h1>게시판 글 리스트</h1>
+	<h1>게시판 글리스트</h1>
 	<hr>
 	<table border="1" cellspacing="0" cellpadding="0" width="1000">
 		<tr>
@@ -21,7 +21,13 @@
 		<c:forEach items="${list }" var="dto">
 		<tr>
 			<td>${dto.bid }</td>
-			<td><a href="content_view?bid=${dto.bid }">${dto.btitle }</a></td>
+			
+			<td>
+				<c:forEach begin="1" end="${dto.bindent }">&nbsp;&nbsp;&nbsp;</c:forEach>  <!-- forEach 반복문으로 감싼다, 댓글 들여쓰기 역할 -->
+				<a href="content_view?bid=${dto.bid }">${dto.btitle }</a>
+				
+			</td>
+			
 			<td>${dto.bname }</td>
 			<td>${dto.bdate }</td>
 			<td>${dto.bhit }</td>

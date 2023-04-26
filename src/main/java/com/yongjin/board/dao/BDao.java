@@ -69,6 +69,7 @@ public class BDao {
 		ArrayList<BDto> dtos = new ArrayList<BDto>();
 		
 		String sql = "SELECT * FROM mvc_board ORDER BY bgroup DESC, bstep ASC";
+//		String sql = "SELECT * FROM mvc_board ORDER BY bgroup DESC";
 		
 		try {
 			conn = dataSource.getConnection();
@@ -77,7 +78,7 @@ public class BDao {
 			pstmt = conn.prepareStatement(sql);
 			rs = pstmt.executeQuery();
 			
-			while(rs.next()) { // DB에서 가져온 레코드의 수만큼 반복
+			while(rs.next()) { //DB에서 가져온 레코드의 수만큼 반복
 				int bid = rs.getInt("bid");
 				String bname = rs.getString("bname");
 				String btitle = rs.getString("btitle");
@@ -119,7 +120,7 @@ public class BDao {
 	
 	public BDto content_view(String boardId) {
 		
-		upHit(boardId); // 조회수 증가 함수 호출
+		upHit(boardId);//조회수 증가 메서드 호출
 		
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -220,6 +221,7 @@ public class BDao {
 			String sql = "DELETE FROM mvc_board WHERE bid=?";
 			
 			pstmt = conn.prepareStatement(sql);
+
 			pstmt.setString(1, bid);
 			
 			pstmt.executeUpdate();
@@ -241,7 +243,7 @@ public class BDao {
 		
 	}
 	
-	public void upHit(String bid) { // 호출될때마다 조회수(bhit)를 1씩 증가
+	public void upHit(String bid) {//호출 시 조회수(bhit) 1씩 증가해주는 메서드
 		
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -251,6 +253,7 @@ public class BDao {
 			String sql = "UPDATE mvc_board SET bhit=bhit+1 WHERE bid=?";
 			
 			pstmt = conn.prepareStatement(sql);
+
 			pstmt.setString(1, bid);
 			
 			pstmt.executeUpdate();
@@ -274,6 +277,8 @@ public class BDao {
 	
 	public void reply(String bid, String bname, String btitle, String bcontent, String bgroup, String bstep, String bindent) {
 		
+		replySort(bgroup, bstep);
+		
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		
@@ -288,6 +293,7 @@ public class BDao {
 			pstmt.setString(4, bgroup);
 			pstmt.setInt(5, Integer.parseInt(bstep)+1);
 			pstmt.setInt(6, Integer.parseInt(bindent)+1);
+			
 			
 			pstmt.executeUpdate();
 			
@@ -307,6 +313,39 @@ public class BDao {
 		}
 		
 	}
+	
+	public void replySort(String bgroup, String bstep) {
+		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		
+		try {
+			conn = dataSource.getConnection();
+			String sql = "UPDATE mvc_board SET bstep = bstep + 1 WHERE bgroup = ? and bstep > ?";
+			
+			pstmt = conn.prepareStatement(sql);
 
+			pstmt.setString(1, bgroup);
+			pstmt.setString(2, bstep);
+			
+			pstmt.executeUpdate();
+			
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if(pstmt != null) {
+					pstmt.close();
+				}
+				if(conn != null) {
+					conn.close();
+				}	
+			} catch(Exception e) {
+				e.printStackTrace();
+			}
+		}
+		
+		
+	}
 
 }
